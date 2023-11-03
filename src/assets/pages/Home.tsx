@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Layout from "./Layout"
-import { Avatar, Box, Grid, Typography } from "@mui/material"
+import { Avatar, Box, Divider, Grid, Typography } from "@mui/material"
 import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
 import { grey } from "@mui/material/colors"
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -20,11 +20,16 @@ function Home(){
         if (!userLogged) {
             navigate('/login')
         } else {
-           const getTweets = async () => {
+            const getTweets = async () => {
+            const userData = JSON.parse(localStorage.getItem('user') || '{}')
+            const userName = userData.name
+            const userNickname = userData.user_name
+
             try{
                 const response = await apiBase.get('/tweets')
-                setTweets(response.data)
-                console.log(response.data)
+                
+                setTweets(response.data.data)
+                console.log(response.data.data)
             }catch(error){
                 console.log(error)
             }
@@ -45,28 +50,34 @@ function Home(){
                 {/* <Box sx={{ height: "calc(100vh - 150px)", overflowY: "auto" }} > */}
                 <ScrollableContainer>
                     <Box sx={{padding: 3, borderTop: 1 , marginTop: 1}}>
-                            <Grid container margin={2}>
+
+                            { tweets? (
+                            tweets.map((tweet: any,index) => (
+                                <Grid container margin={2}>
                                 <Grid xs={1}>
                                     <Avatar sx={{width: 70, height: 70}} alt="Nome do User" src={MyProfilePicture}/>
                                 </Grid>
                                 <Grid xs={10} sx={{marginLeft:3}}>
                                     <Box display={"flex"} alignItems='center'>
-                                    <Typography variant="h6">Nome da pessoa</Typography>
-                                    <Typography variant="subtitle2" color={grey[400]} sx={{marginLeft:1}}>@nomedapessoa</Typography>
+                                    <Typography variant="h6">{tweet.author.name}</Typography>
+                                    <Typography variant="subtitle2" color={grey[400]} sx={{marginLeft:1}}>@{tweet.author.user_name}</Typography>
                                     </Box>
-                                    <Typography variant="body1" >Hello, this is a nice content and xablau! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi facere repudiandae tempora tempore asperiores, animi iusto alias voluptas beatae molestias voluptates reiciendis dignissimos inventore magnam ratione, veniam suscipit in dolorem consequatur dicta at!</Typography>
-                                    <Box>
-                                        <Typography variant="subtitle2" color={grey[400]}>10:00 - 10/10/2021</Typography>
-                                    </Box>
-                                    <Box display={"flex"}>
+                                    <Typography variant="body1" >{tweet.content}</Typography>
+                                    <Box display={"flex"} sx={{marginTop:1, marginBottom: 2}}>
                                         <ChatBubbleOutlineOutlinedIcon sx={{marginRight:1}}/>
                                         <Typography variant="subtitle2" color={grey[400]}>0</Typography>
                                         <FavoriteBorderOutlinedIcon sx={{marginLeft:2, marginRight:1}}/>
                                         <Typography variant="subtitle2" color={grey[400]}>2</Typography>
                                     </Box>
-                                </Grid>
+                                <Divider />
 
-                            </Grid>
+                                </Grid>
+                            </Grid>)
+                            ))
+                            : (<Typography variant="h5">Não há tweets para exibir</Typography>
+                            )}
+                        
+                            
                        
                     </Box>
                     </ScrollableContainer>

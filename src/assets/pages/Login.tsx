@@ -32,6 +32,7 @@ function Login() {
             console.log(logged.data);
 
             localStorage.setItem('token', logged.data.token)
+            localStorage.setItem('user', JSON.stringify(logged.data.user))
             navigate('/')
             
         } catch (error) {

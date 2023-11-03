@@ -17,6 +17,10 @@ interface LayoutProps {
 
 function Layout({children} : LayoutProps) {
     const navigate = useNavigate()
+    const userData = JSON.parse(localStorage.getItem('user') || '{}')
+    const userName = userData.name
+    const userNickname = userData.user_name
+
     return (
         <>
             <Grid container component="main" display="flex" padding="0" spacing={0}  >
@@ -61,10 +65,10 @@ function Layout({children} : LayoutProps) {
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <CardContent sx={{ flex: '1 0 auto' }}>
                                 <Typography component="div" variant="h5">
-                                    Mateus Silva
+                                    {userName}
                                 </Typography>
                                 <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    @mateusSilva42
+                                    @{userNickname}
                                 </Typography>
                             </CardContent>
                         </Box>
