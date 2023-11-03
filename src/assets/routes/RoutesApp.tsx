@@ -1,13 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "../pages/Layout";
+// import Layout from "../pages/Layout";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import Home from "../pages/Home";
+import Explorar from "../pages/Explorar";
+import MeuPerfil from "../pages/MeuPerfil";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Layout />,
+        element: <Home />,
     },
     {
         path: "/login",
@@ -18,8 +20,16 @@ const router = createBrowserRouter([
         element: <Cadastro />,
     },
     {
-        path: "/home",
-        element: <Home />,
+        path: '/explorar',
+        element: <Explorar />,
+    },
+    {
+        path: '/perfil',
+        element: <MeuPerfil />,
+    },
+    {
+        path: '*',
+        element: <h1>ERROR 404</h1>,
     },
     
 ])

@@ -1,47 +1,26 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import Layout from "./Layout"
 import { Avatar, Box, Grid, Typography } from "@mui/material"
-import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
-import { grey } from "@mui/material/colors"
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-// import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ScrollableContainer from "../components/ScrollableContainer"
-import apiBase from "../../../axiosConfig"
-
+import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { grey } from "@mui/material/colors"
 
 function Home(){
     const navigate = useNavigate()
     const userLogged = localStorage.getItem('token')
-    const [tweets, setTweets] = useState([])
 
     useEffect(() => {
-        if (!userLogged) {
-            navigate('/login')
-        } else {
-           const getTweets = async () => {
-            try{
-                const response = await apiBase.get('/tweets')
-                setTweets(response.data)
-                console.log(response.data)
-            }catch(error){
-                console.log(error)
-            }
-           }
-            getTweets()
-        }
-
-    }, [userLogged])
+        if (!userLogged) navigate('/login')
+    })
     
     return (
         <>
         <Layout>
-                <Typography variant="h4">Página Inicial</Typography>
-                <Box>
-                    <Typography variant="h5">Bem vindo ao GrowTwitter</Typography>
-                    <Typography variant="body1">Aqui você pode postar o que quiser, desde que não seja ofensivo.</Typography>
-                </Box>
+                <Typography variant="h4">Meu Perfil</Typography>
+                
                 {/* <Box sx={{ height: "calc(100vh - 150px)", overflowY: "auto" }} > */}
                 <ScrollableContainer>
                     <Box sx={{padding: 3, borderTop: 1 , marginTop: 1}}>
@@ -67,6 +46,8 @@ function Home(){
                                 </Grid>
 
                             </Grid>
+                            
+                           
                        
                     </Box>
                     </ScrollableContainer>
