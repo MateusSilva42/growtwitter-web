@@ -30,7 +30,7 @@ function Login() {
                 password: password
             }
 
-            await apiBase.post('http://localhost:8080/users', data)
+            await apiBase.post('users', data)
 
             alert(`Cadastro realizado com sucesso!`);
             setTimeout(() => {

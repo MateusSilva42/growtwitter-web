@@ -25,7 +25,7 @@ function Login() {
                 password: password
             }
 
-            const logged = await apiBase.post('http://localhost:8080/users/login', data)
+            const logged = await apiBase.post('/users/login', data)
 
             console.log(`Seja bem vindo ${email}`);
             console.log(logged.data);
