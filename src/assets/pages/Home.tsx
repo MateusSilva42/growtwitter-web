@@ -19,10 +19,7 @@ function Home(){
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
-    interface HomeProps {
-        getTweets: () => Promise<void>;
-    }
-
+  
     useEffect(() => {
         if (!userLogged) {
             navigate('/login')
@@ -72,7 +69,6 @@ function Home(){
     }
 
     const like = async (tweetId: String) => {
-        setLoadingLike(true)
         try{
             const userData = JSON.parse(localStorage.getItem('user') || '{}')
             const userId = userData.id
@@ -100,10 +96,8 @@ function Home(){
                     
                   }));
             }
-            setLoadingLike(false)
         }catch(error){
             console.log(error)
-            setLoadingLike(false)
         }
        
     }
@@ -158,9 +152,6 @@ function Home(){
                     </Box>
                     </ScrollableContainer>
                 ) }
-                
-                {/* </Box> */}
-                
         </Layout>
         </>
     )

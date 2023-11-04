@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Layout from "./Layout"
 import { Avatar, Box, Divider, Grid, Typography, CircularProgress, Alert } from "@mui/material"
-import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
+import DefaultPicture from "../../assets/imgs/default_profile.png"
 import { grey } from "@mui/material/colors"
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
@@ -25,23 +25,6 @@ function Home(){
             navigate('/login')
         } else {
             setLoading(true);
-            const userData = JSON.parse(localStorage.getItem('user') || '{}')
-            const userId = userData.id  
-            const getTweets = async () => {
-
-            try{
-                const response = await apiBase.get(`/tweets/${userId}`)
-                
-                setTweets(response.data.data)
-                console.log('tweets',response.data.data);
-                setLoading(false);
-               
-            }catch(error){
-                console.log(error)
-                setError(true)
-                setLoading(false);
-            }
-           }
             getTweets()
         }
 
@@ -59,6 +42,23 @@ function Home(){
         setLikeCounts(initialLikeCounts);
         setIsLiked(initialIsLiked);
     }, [tweets])
+
+    const getTweets = async () => {
+        try{
+            const userData = JSON.parse(localStorage.getItem('user') || '{}')
+            const userId = userData.id  
+            const response = await apiBase.get(`/tweets/${userId}`)
+            
+            setTweets(response.data.data)
+            console.log('tweets',response.data.data);
+            setLoading(false);
+           
+        }catch(error){
+            console.log(error)
+            setError(true)
+            setLoading(false);
+        }
+    }
 
     const getLikes = async (tweetId: String) => {
         try{
@@ -106,7 +106,7 @@ function Home(){
     
     return (
         <>
-        <Layout>
+        <Layout getTweets = {getTweets}>
                 <Typography variant="h4">Meu Perfil</Typography>
                 
                 {/* <Box sx={{ height: "calc(100vh - 150px)", overflowY: "auto" }} > */}
@@ -126,7 +126,7 @@ function Home(){
                             tweets.map((tweet: any) => (
                                 <Grid container margin={2}>
                                 <Grid xs={1}>
-                                    <Avatar sx={{width: 70, height: 70}} alt="Nome do User" src={MyProfilePicture}/>
+                                    <Avatar sx={{width: 70, height: 70}} alt="Nome do User" src={DefaultPicture}/>
                                 </Grid>
                                 <Grid xs={10} sx={{marginLeft:3}}>
                                     <Box display={"flex"} alignItems='center'>
