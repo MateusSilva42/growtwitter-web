@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiBase = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://growtwitter-api-jm8f.onrender.com",
 });
 
 apiBase.interceptors.request.use(
