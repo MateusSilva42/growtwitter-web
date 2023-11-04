@@ -1,5 +1,5 @@
-import React, {ReactNode} from "react"
-import { Grid, Typography, Divider, MenuList, MenuItem, ListItemText, ListItemIcon, Button, Box, Card, CardContent, CardMedia, Link, Paper } from "@mui/material"
+import  {ReactNode} from "react"
+import { Grid, Typography, Divider, MenuList, MenuItem, ListItemText, ListItemIcon, Button, Box, Card, CardContent, CardMedia, Paper } from "@mui/material"
 // import IconExploreSelected from "../../assets/imgs/icone_explorar_selecionado.svg"
 import IconExplore from "../../assets/imgs/icone_explorar.svg"
 // import IconHomeSelected from "../../assets/imgs/icone_pagina_inicial_selecionado.svg"
@@ -8,7 +8,7 @@ import IconHome from "../../assets/imgs/icone_pagina_inicial.svg"
 import IconProfile from "../../assets/imgs/icone_perfil.svg"
 // import ProfilePicture from "../../assets/imgs/foto_perfil_default.svg"
 import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { grey } from "@mui/material/colors"
 
 interface LayoutProps {
@@ -100,6 +100,10 @@ function Layout({children} : LayoutProps) {
 
                         <Typography variant="subtitle2" >Cinema - Assunto do Momento</Typography>
                         <Typography variant="body1" marginBottom={1} >Assunto sobre Filmes e Cinema</Typography>
+
+                        <Link to="/explorar" >
+                            <Typography variant="subtitle2" sx={{textDecoration:'none'}} >Mostrar mais</Typography>
+                        </Link>
 
                     </Paper>
                 </Grid>
