@@ -19,7 +19,6 @@ function Login() {
     const handleLogin = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         try {
             event.preventDefault()
-            console.log(email, password);
 
             const data = {
                 email: email,
