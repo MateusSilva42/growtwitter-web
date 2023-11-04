@@ -1,25 +1,29 @@
 import  {ReactNode} from "react"
-import { Grid, Typography, Divider, MenuList, MenuItem, ListItemText, ListItemIcon, Button, Box, Card, CardContent, CardMedia, Paper } from "@mui/material"
-// import IconExploreSelected from "../../assets/imgs/icone_explorar_selecionado.svg"
+import { Grid, Typography, Divider, MenuList, MenuItem, ListItemText, ListItemIcon, Button, Box, Card, CardContent, CardMedia, Paper} from "@mui/material"
 import IconExplore from "../../assets/imgs/icone_explorar.svg"
-// import IconHomeSelected from "../../assets/imgs/icone_pagina_inicial_selecionado.svg"
 import IconHome from "../../assets/imgs/icone_pagina_inicial.svg"
-// import IconProfileSelected from "../../assets/imgs/icone_perfil_selecionado.svg"
 import IconProfile from "../../assets/imgs/icone_perfil.svg"
-// import ProfilePicture from "../../assets/imgs/foto_perfil_default.svg"
-import MyProfilePicture from "../../assets/imgs/mateus_profile.jpg"
+import DefaultPicture from "../../assets/imgs/default_profile.png"
 import { Link, useNavigate } from "react-router-dom"
 import { grey } from "@mui/material/colors"
+import TweetModal from "../components/TweetModal"
 
 interface LayoutProps {
     children: ReactNode
+    getTweets?: () => Promise<void>;
 }
 
-function Layout({children} : LayoutProps) {
+function Layout({children, getTweets} : LayoutProps) {
     const navigate = useNavigate()
     const userData = JSON.parse(localStorage.getItem('user') || '{}')
     const userName = userData.name
     const userNickname = userData.user_name
+
+    const loggout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        navigate('/login')
+    }
 
     return (
         <>
@@ -51,7 +55,7 @@ function Layout({children} : LayoutProps) {
                         <Divider />
                     </MenuList>
 
-                    <Button variant="contained" color="primary" fullWidth={true} >Tweetar</Button>
+                    <TweetModal getTweets = {getTweets} />
                     </Box>
 
                     <Box display={'flex'} flexDirection={'column'} >
@@ -59,7 +63,7 @@ function Layout({children} : LayoutProps) {
                     <CardMedia
                             component="img"
                             sx={{ width: 60, height: 60, borderRadius: "50%" }}
-                            image= {MyProfilePicture}
+                            image= {DefaultPicture}
                             alt="foto de perfil"
                         />
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -74,7 +78,7 @@ function Layout({children} : LayoutProps) {
                         </Box>
                         
                     </Card>
-                        <Button size="small">Sair</Button>
+                        <Button size="small" onClick={loggout}>Sair</Button>
                     </Box>
 
 
