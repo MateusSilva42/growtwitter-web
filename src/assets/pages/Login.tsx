@@ -5,6 +5,7 @@ import LoginContainer from "../components/LoginContainer"
 import React, { useEffect, useState } from "react"
 import apiBase from "../../../axiosConfig.ts"
 import { useNavigate } from "react-router-dom"
+import {jwtDecode} from 'jwt-decode';
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -15,6 +16,7 @@ function Login() {
     useEffect(()=> {
         if (userLogged) navigate('/')
     })
+
 
     const handleLogin = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         try {
@@ -31,13 +33,15 @@ function Login() {
             console.log(logged.data);
 
             localStorage.setItem('token', logged.data.token)
-            localStorage.setItem('user', JSON.stringify(logged.data.user))
+
+            const decodedToken = jwtDecode(logged.data.token);
+            localStorage.setItem('user', JSON.stringify(decodedToken))
+
             navigate('/')
             
         } catch (error) {
             console.log(error)
         }
-
     }
 
     return (

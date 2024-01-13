@@ -71,7 +71,7 @@ function Home(){
     const like = async (tweetId: String) => {
         try{
             const userData = JSON.parse(localStorage.getItem('user') || '{}')
-            const userId = userData.id
+            const userId = userData.userId
             
             const data = {
                 user_id: userId
